@@ -23,9 +23,11 @@
 // Selector '.mdc-*' should only be used in this project.
 // stylelint-disable selector-class-pattern
 
+@use 'sass:map';
 @use '@material/feature-targeting/feature-targeting';
 @use '@material/ripple/ripple';
 @use '@material/ripple/ripple-theme';
+@use '@material/elevation/elevation-theme';
 @use '@material/theme/theme';
 @use '@material/typography/typography';
 @use '@material/rtl/mixins' as rtl-mixins;
@@ -184,6 +186,7 @@
   }
 }
 
+/// @deprecated Use `label-text-color()`.
 @mixin text-label-color($color, $query: feature-targeting.all()) {
   $feat-color: feature-targeting.create-target($query, color);
 
@@ -191,6 +194,36 @@
     @include feature-targeting.targets($feat-color) {
       @include theme.property(color, $color);
     }
+  }
+}
+
+@mixin label-text-color($color) {
+  .mdc-tab__text-label {
+    @include theme.property(color, $color);
+  }
+}
+
+@mixin inactive-label-text-color($color) {
+  @include _is-inactive() {
+    @include label-text-color($color);
+  }
+}
+
+@mixin inactive-hover-label-text-color($color) {
+  &:hover {
+    @include inactive-label-text-color($color);
+  }
+}
+
+@mixin inactive-focus-label-text-color($color) {
+  &:focus {
+    @include inactive-label-text-color($color);
+  }
+}
+
+@mixin inactive-pressed-label-text-color($color) {
+  &:active {
+    @include inactive-label-text-color($color);
   }
 }
 
@@ -206,6 +239,30 @@
   }
 }
 
+@mixin inactive-icon-color($color) {
+  @include _is-inactive() {
+    @include icon-color($color);
+  }
+}
+
+@mixin inactive-hover-icon-color($color) {
+  &:hover {
+    @include inactive-icon-color($color);
+  }
+}
+
+@mixin inactive-focus-icon-color($color) {
+  &:focus {
+    @include inactive-icon-color($color);
+  }
+}
+
+@mixin inactive-pressed-icon-color($color) {
+  &:active {
+    @include inactive-icon-color($color);
+  }
+}
+
 @mixin states-color($color, $query: feature-targeting.all()) {
   @include ripple-theme.states(
     $color,
@@ -214,27 +271,217 @@
   );
 }
 
+@mixin container-color($color) {
+  @include theme.property('background-color', $color);
+}
+
+@mixin container-elevation($elevation) {
+  // TODO(b/188905911): Use elevation's theme() mixin.
+  @if $elevation and map.get($elevation, box-shadow) {
+    @include elevation-theme.shadow(map.get($elevation, box-shadow));
+  }
+
+  @if $elevation and map.get($elevation, overlay-opacity) {
+    @include elevation-theme.overlay-opacity(
+      map.get($elevation, overlay-opacity)
+    );
+  }
+}
+
+@mixin container-shape($shape-radius) {
+  @include theme.property('border-radius', $shape-radius);
+}
+
+@mixin icon-size($size) {
+  @include theme.property('width', $size);
+  @include theme.property('height', $size);
+  @include theme.property('font-size', $size);
+}
+
 @mixin ink-color($color, $query: feature-targeting.all()) {
   @include icon-color($color, $query);
   @include states-color($color, $query);
   @include text-label-color($color, $query);
 }
 
+/// @deprecated Use `active-label-text-color()`.
 @mixin active-text-label-color($color, $query: feature-targeting.all()) {
-  &.mdc-tab--active {
+  @include _is-active() {
     @include text-label-color($color, $query);
   }
 }
 
+@mixin active-label-text-color($color) {
+  @include _is-active() {
+    @include label-text-color($color);
+  }
+}
+
+@mixin active-hover-label-text-color($color) {
+  &:hover {
+    @include active-label-text-color($color);
+  }
+}
+
+@mixin active-focus-label-text-color($color) {
+  &:focus {
+    @include active-label-text-color($color);
+  }
+}
+
+@mixin active-pressed-label-text-color($color) {
+  &:active {
+    @include active-label-text-color($color);
+  }
+}
+
 @mixin active-icon-color($color, $query: feature-targeting.all()) {
-  &.mdc-tab--active {
+  @include _is-active() {
     @include icon-color($color, $query);
   }
 }
 
+@mixin active-hover-icon-color($color) {
+  &:hover {
+    @include active-icon-color($color);
+  }
+}
+
+@mixin active-focus-icon-color($color) {
+  &:focus {
+    @include active-icon-color($color);
+  }
+}
+
+@mixin active-pressed-icon-color($color) {
+  &:active {
+    @include active-icon-color($color);
+  }
+}
+
 @mixin active-states-color($color, $query: feature-targeting.all()) {
-  &.mdc-tab--active {
+  @include _is-active() {
     @include states-color($color, $query);
+  }
+}
+
+@mixin active-state-layer-color($color) {
+  @include _is-active() {
+    @include _state-layer-color($color);
+  }
+}
+
+@mixin active-hover-state-layer-opacity($opacity) {
+  @include _is-active() {
+    @include _hover-state-layer-opacity($opacity);
+  }
+}
+
+@mixin active-focus-state-layer-opacity($opacity) {
+  @include _is-active() {
+    @include _focus-state-layer-opacity($opacity);
+  }
+}
+
+@mixin active-pressed-state-layer-opacity($opacity) {
+  @include _is-active() {
+    @include _pressed-state-layer-opacity($opacity);
+  }
+}
+
+@mixin inactive-state-layer-color($color) {
+  @include _is-inactive() {
+    @include _state-layer-color($color);
+  }
+}
+
+@mixin inactive-hover-state-layer-opacity($opacity) {
+  @include _is-inactive() {
+    @include _hover-state-layer-opacity($opacity);
+  }
+}
+
+@mixin inactive-focus-state-layer-opacity($opacity) {
+  @include _is-inactive() {
+    @include _focus-state-layer-opacity($opacity);
+  }
+}
+
+@mixin inactive-pressed-state-layer-opacity($opacity) {
+  @include _is-inactive() {
+    @include _pressed-state-layer-opacity($opacity);
+  }
+}
+
+@mixin _focus-state-layer-opacity($opacity) {
+  @include ripple-theme.states-focus-opacity(
+    $opacity,
+    $ripple-target: variables.$ripple-target
+  );
+}
+
+@mixin _pressed-state-layer-opacity($opacity) {
+  @include ripple-theme.states-press-opacity(
+    $opacity,
+    $ripple-target: variables.$ripple-target
+  );
+}
+
+@mixin _state-layer-color($color) {
+  @include ripple-theme.states-base-color(
+    $color,
+    $ripple-target: variables.$ripple-target
+  );
+}
+
+@mixin _hover-state-layer-opacity($opacity) {
+  @include ripple-theme.states-hover-opacity(
+    $opacity,
+    $ripple-target: variables.$ripple-target
+  );
+}
+
+@mixin _focus-state-layer-opacity($opacity) {
+  @include ripple-theme.states-focus-opacity(
+    $opacity,
+    $ripple-target: variables.$ripple-target
+  );
+}
+
+@mixin _pressed-state-layer-opacity($opacity) {
+  @include ripple-theme.states-press-opacity(
+    $opacity,
+    $ripple-target: variables.$ripple-target
+  );
+}
+
+@mixin label-text-font-family($font-family) {
+  .mdc-tab__text-label {
+    @include theme.property('font-family', $font-family);
+  }
+}
+
+@mixin label-text-font-size($font-size) {
+  .mdc-tab__text-label {
+    @include theme.property('font-size', $font-size);
+  }
+}
+
+@mixin label-text-letter-spacing($letter-spacing) {
+  .mdc-tab__text-label {
+    @include theme.property('letter-spacing', $letter-spacing);
+  }
+}
+
+@mixin label-text-line-height($line-height) {
+  .mdc-tab__text-label {
+    @include theme.property('line-height', $line-height);
+  }
+}
+
+@mixin label-text-weight($weight) {
+  .mdc-tab__text-label {
+    @include theme.property('font-weight', $weight);
   }
 }
 
@@ -263,7 +510,19 @@
   $feat-structure: feature-targeting.create-target($query, structure);
 
   @include feature-targeting.targets($feat-structure) {
-    height: $height;
+    @include theme.property('height', $height);
+  }
+}
+
+@mixin container-height($height) {
+  &:not(.mdc-tab--stacked) {
+    @include height($height);
+  }
+}
+
+@mixin with-icon-and-label-text-container-height($height) {
+  &.mdc-tab--stacked {
+    @include height($height);
   }
 }
 
@@ -368,4 +627,16 @@
 
   @include text-label-color(variables.$text-label-color-active, $query);
   @include icon-color(variables.$icon-color-active, $query);
+}
+
+@mixin _is-active() {
+  &.mdc-tab--active {
+    @content;
+  }
+}
+
+@mixin _is-inactive() {
+  &:not(.mdc-tab--active) {
+    @content;
+  }
 }
