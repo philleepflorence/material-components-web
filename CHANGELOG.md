@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [13.0.1](https://github.com/philleepflorence/material-components-web/compare/v13.0.0...v13.0.1) (2022-01-02)
+
+
+### Bug Fixes
+
+* **dialog:** Set default z-index for close button in FloatingSheet dialog. ([3366a71](https://github.com/philleepflorence/material-components-web/commit/3366a71d72f48e946a3f3b314b315395fafb3a1f))
+
+
+
+
+
 # [13.0.0](https://github.com/material-components/material-components-web/compare/v12.0.0...v13.0.0) (2021-09-24)
 
 
