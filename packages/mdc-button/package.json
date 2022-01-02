@@ -1,7 +1,7 @@
 {
   "name": "@material/button",
   "description": "The Material Components for the web button component",
-  "version": "13.0.0",
+  "version": "13.0.1",
   "license": "MIT",
   "keywords": [
     "material components",
@@ -15,18 +15,18 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@material/density": "^13.0.0",
-    "@material/dom": "^13.0.0",
-    "@material/elevation": "^13.0.0",
-    "@material/feature-targeting": "^13.0.0",
-    "@material/focus-ring": "^13.0.0",
-    "@material/ripple": "^13.0.0",
-    "@material/rtl": "^13.0.0",
-    "@material/shape": "^13.0.0",
-    "@material/theme": "^13.0.0",
-    "@material/tokens": "^13.0.0",
-    "@material/touch-target": "^13.0.0",
-    "@material/typography": "^13.0.0",
+    "@material/density": "^13.0.1",
+    "@material/dom": "^13.0.1",
+    "@material/elevation": "^13.0.1",
+    "@material/feature-targeting": "^13.0.1",
+    "@material/focus-ring": "^13.0.1",
+    "@material/ripple": "^13.0.1",
+    "@material/rtl": "^13.0.1",
+    "@material/shape": "^13.0.1",
+    "@material/theme": "^13.0.1",
+    "@material/tokens": "^13.0.1",
+    "@material/touch-target": "^13.0.1",
+    "@material/typography": "^13.0.1",
     "tslib": "^2.1.0"
   }
 }
